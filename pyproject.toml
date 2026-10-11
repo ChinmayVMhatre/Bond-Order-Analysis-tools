@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qm9-bond-orders"
+version = "0.1.0"
+description = "Parsing, storage and comparison of bond-order matrices for QM9 and Transition1x"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Chinmay Mhatre" }]
+keywords = ["computational chemistry", "bond order", "QM9", "Gaussian",
+            "Mayer", "Wiberg", "ReaxFF", "transition state"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Chemistry",
+]
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+  "pandas>=2.0",
+  "h5py>=3.8",
+]
+
+[project.optional-dependencies]
+structures = ["ase>=3.22"]
+embedding = ["umap-learn>=0.5", "scikit-learn>=1.3", "dscribe>=2.0",
+             "chemiscope>=0.8", "scikit-matter>=0.2"]
+cheminfo = ["rdkit>=2023.3"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+qm9-build-pauling  = "build_pauling_h5:main"
+qm9-browse-pauling = "browse_pauling_h5:main"
+qm9-verify-subset  = "verify_subset:main"
+qm9-pauling-bo     = "pauling_bo:main"
+
+# Modules live flat at the repo root so `import gaussian_parse` works both
+# from a notebook opened here and after `pip install -e .`.
+[tool.setuptools]
+py-modules = [
+  "gaussian_parse", "pauling_bo",
+  "build_pauling_h5", "browse_pauling_h5", "browse_hdf5", "describe_h5",
+  "merge_flat_h5", "inspect_mbs", "verify_subset",
+  "nts_decompose", "bo_scalar", "reacting_bonds", "bo_change",
+  "rho_from_dicts", "rho_plot", "rho_pipeline", "rho_from_json",
+  "bo_wasserstein",
+  "mbs_umap", "mbs_condensed_umap", "chemiscope_mbs", "qm9_soap_umap",
+  "pcovc_analysis",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
