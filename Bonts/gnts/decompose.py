@@ -50,7 +50,7 @@ def bonding(BO_R, BO_TS, BO_P, eps=1e-12):
             "w_breaking": float((W / tot)[rev].sum())}
 
 
-def bond_table(res, labels=None, min_weight=1e-3):
+def bond_table(res, labels=None,sorting_by = 'contrib', min_weight=1e-3):
     """
     Per-unique-pair bonding table (pandas DataFrame). Values are doubled so the
     'contrib' column sums to n_ts.
@@ -68,7 +68,10 @@ def bond_table(res, labels=None, min_weight=1e-3):
     df["kind"] = np.where(df["dP"] > 0, "forming",
                           np.where(df["dP"] < 0, "breaking", "spectator"))
     df = df[df["weight"] >= min_weight]
-    return df.sort_values("weight", ascending=False).reset_index(drop=True)
+    if sorting_by is not None:
+        df = df.sort_values(sorting_by, ascending=False).reset_index(drop=True)
+        
+    return df.sort_values(sorting_by, ascending=False).reset_index(drop=True)
 
 
 # --------------------------------------------------------------------------
