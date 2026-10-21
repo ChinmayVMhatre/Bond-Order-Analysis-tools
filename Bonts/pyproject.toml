@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gnts"
+version = "0.1.0"
+description = "Parse Gaussian MinPop/MBS matrices and decompose n_TS into bonding and antibonding contributions"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.20", "pandas>=1.3"]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+[tool.setuptools]
+packages = ["gnts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
