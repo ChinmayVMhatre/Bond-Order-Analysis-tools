@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-import gnts
+import bonts
 
 DATA = Path(__file__).resolve().parents[1] / "examples" / "data"
 FILES = [DATA / f"sn2_{s}.log" for s in ("R", "TS", "P")]
