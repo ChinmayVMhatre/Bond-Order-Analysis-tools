@@ -17,7 +17,7 @@ Requires `numpy` and `pandas`; `pytest` for the tests.
 ## Layout
 
 ```
-BOnts/
+bonts/
   gaussian.py     reading Gaussian output, MBS matrix extraction
   decompose.py    n_TS decomposition, bonding and antibonding channels
 examples/
