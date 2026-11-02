@@ -1,4 +1,4 @@
-"""Tests for gnts. Run with: python -m pytest tests/ -q"""
+"""Tests for bonts. Run with: python -m pytest tests/ -q"""
 
 from pathlib import Path
 
@@ -13,19 +13,19 @@ FILES = [DATA / f"sn2_{s}.log" for s in ("R", "TS", "P")]
 
 @pytest.fixture(scope="module")
 def result():
-    return gnts.analyse_reaction(*FILES)
+    return bonts.analyse_reaction(*FILES)
 
 
 def test_parse_shape_and_electrons():
-    mbs = gnts.parse_mbs_condensed(gnts.read_output(FILES[1]))
+    mbs = bonts.parse_mbs_condensed(bonts.read_output(FILES[1]))
     assert mbs.shape == (7, 7)
     assert np.allclose(mbs, mbs.T)
     assert np.isclose(mbs.sum(), 28.0, atol=1e-4)
 
 
 def test_bond_orders_diagonal_zero():
-    mbs = gnts.parse_mbs_condensed(gnts.read_output(FILES[1]))
-    bo = gnts.mbs_bond_orders(mbs)
+    mbs = bonts.parse_mbs_condensed(bonts.read_output(FILES[1]))
+    bo = bonts.mbs_bond_orders(mbs)
     assert np.allclose(np.diag(bo), 0.0)
     assert np.isclose(bo[0, 2], 2 * mbs[0, 2])
 
@@ -51,7 +51,7 @@ def test_antibonding_independent_of_n_ts(result):
     R, P = result["BO_R"], result["BO_P"]
     for n in (0.1, 0.3, 0.5, 0.7, 0.9):
         T = R + n * (P - R)
-        a = gnts.antibonding(R, T, P)
+        a = bonts.antibonding(R, T, P)
         assert abs(a["a_excess"]) < 1e-12
 
 
@@ -65,4 +65,4 @@ def test_missing_section(tmp_path):
     p = tmp_path / "empty.log"
     p.write_text("nothing here\n")
     with pytest.raises(ValueError):
-        gnts.load_bond_orders(p)
+        bonts.load_bond_orders(p)
