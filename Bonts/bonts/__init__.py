@@ -1,4 +1,4 @@
-"""gnts -- Gaussian MinPop/MBS parsing and n_TS bonding/antibonding analysis."""
+"""Bonts -- Gaussian MinPop/MBS parsing and n_TS bonding/antibonding analysis."""
 
 from .gaussian import (
     read_output,
@@ -9,7 +9,7 @@ from .gaussian import (
     load_bond_orders,
 )
 from .decompose import (
-    bonding,
+    decompose,
     bond_table,
     antibonding,
     antibonding_table,
